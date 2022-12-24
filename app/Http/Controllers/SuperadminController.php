@@ -10,6 +10,6 @@ class SuperadminController extends Controller
 {
     public function Home(){
         $user = User::where('id', Auth::id())->with('detail')->first()->toJson();
-        return view('Superadmin.home', compact('user'));
+        return view('superadmin.home', compact('user'));
     }
 }
