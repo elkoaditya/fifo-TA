@@ -45,7 +45,7 @@ class UserLoginController extends Controller
                         'username' => Auth::user()->username,
                     ]);
 
-                    return redirect('/superadmin/home')->with('notiv', json_encode([
+                    return redirect('/superadmin/barang')->with('notiv', json_encode([
                         'status' => 'success',
                         'header' => 'Success Login !',
                         'sub' => 'Selamat datang '.Auth::user()->name,
