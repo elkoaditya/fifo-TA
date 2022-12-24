@@ -1,0 +1,11 @@
+<script>
+
+    var pusher = new Pusher('400511fe2835dd05df62', {
+        cluster: 'ap1'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+        alert(JSON.stringify(data));
+    });
+</script>
