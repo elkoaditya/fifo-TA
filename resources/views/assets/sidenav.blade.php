@@ -28,6 +28,13 @@
         'icon' => 'hard-drive',
         'type' => 'single', // single, multi, title
         'role' => 'superadmin'
+    ],
+    [
+        'name' => 'Price Management',
+        'url' => '/superadmin/price',
+        'icon' => 'dollar-sign',
+        'type' => 'single', // single, multi, title
+        'role' => 'superadmin'
     ]
 );
 

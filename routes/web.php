@@ -41,6 +41,8 @@ Route::group(['middleware' => ['authrole:superadmin']], function () {
             Route::get('/', [\App\Http\Controllers\BarangController::class, 'index']);
             Route::post('/create', [\App\Http\Controllers\BarangController::class, 'create']);
             Route::get('/{id}', [\App\Http\Controllers\BarangController::class, 'show']);
+            Route::get('/{id}/history', [\App\Http\Controllers\BarangController::class, 'history']);
+            Route::post('/addstock', [\App\Http\Controllers\BarangController::class, 'addStock']);
         });
 
         // Untuk management users
@@ -59,6 +61,13 @@ Route::group(['middleware' => ['authrole:superadmin']], function () {
             Route::post('/store', [\App\Http\Controllers\KategoriController::class, 'store']);
             Route::post('/update', [\App\Http\Controllers\KategoriController::class, 'update']);
             Route::post('/delete/{id}', [\App\Http\Controllers\KategoriController::class, 'delete']);
+        });
+
+        // Untuk route price management
+        Route::group(['prefix' => 'price'], function (){
+            Route::get('/', [\App\Http\Controllers\PriceController::class, 'index']);
+            Route::post('/store', [\App\Http\Controllers\PriceController::class, 'store']);
+            Route::post('/update', [\App\Http\Controllers\PriceController::class, 'update']);
         });
 
 

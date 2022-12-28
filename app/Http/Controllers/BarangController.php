@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\History;
 use App\Models\Kategori;
+use App\Models\Price;
 use App\Models\StockBarang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,14 +15,16 @@ class BarangController extends Controller
     public function index(){
         $barangs = Barang::with('kategori')->withSum('stock', 'jumlah')->get();
         $kategoris = Kategori::all();
-        return view('superadmin.barang.index', compact('barangs', 'kategoris'));
+        $hargas = Price::all();
+        return view('superadmin.barang.index', compact('barangs', 'kategoris', 'hargas'));
     }
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'harga' => 'required|integer',
+            'berat' => 'required|integer',
             'kategori_id' => 'required|integer',
             'jumlah' => 'required|integer',
+            'harga_id' => 'required|integer',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('notiv', json_encode([
@@ -35,7 +38,8 @@ class BarangController extends Controller
             $save_barang = Barang::create([
                 'kategori_id' => $validator->validate()['kategori_id'],
                 'name' => $validator->validate()['name'],
-                'harga' => $validator->validate()['harga'],
+                'berat' => $validator->validate()['berat'],
+                'harga_id' => $validator->validate()['harga_id'],
             ]);
             if ($save_barang) {
                 $save_stock_barang = StockBarang::create([
@@ -45,7 +49,8 @@ class BarangController extends Controller
                 if ($save_stock_barang){
                     $save_history = History::create([
                         'barang_id' => $save_barang->id,
-                        'status' => 'add'
+                        'status' => 'add',
+                        'jumlah' => $validator->validated()['jumlah'],
                     ]);
                     if ($save_history){
                         return redirect()->back()->with('notiv', json_encode([
@@ -78,12 +83,69 @@ class BarangController extends Controller
             return redirect()->back()->with('notiv', json_encode([
                 'status' => 'error',
                 'header' => 'Gagal menyimpan barang',
-                'sub' => 'Silahkan hubungi administrator',
+                'sub' => $err->getMessage(),
             ]));
         }
     }
+    public function addStock(Request $request){
+        $validator = Validator::make($request->all(), [
+            'barang_id' => 'required|integer',
+            'jumlah' => 'required|integer',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with('notiv', json_encode([
+                'status' => 'error',
+                'header' => 'Gagal menambah stock barang',
+                'sub' => 'Silahkan cek semua field sudah di isi dengan benar',
+            ]));
+        }
+        try {
+            $add = StockBarang::create($validator->validated());
+            if ($add) {
+                // Menyimpan history
+                $save_hitory = History::create([
+                    'barang_id' => $validator->validated()['barang_id'],
+                    'jumlah' => $validator->validated()['jumlah'],
+                    'status' => 'add'
+                ]);
+                if ($save_hitory) {
+                    return redirect()->back()->with('notiv', json_encode([
+                        'status' => 'success',
+                        'header' => 'berhasil menambah stock barang',
+                        'sub' => 'berhasil menambah stock barang'
+                    ]));
+                } else {
+                    return redirect()->back()->with('notiv', json_encode([
+                        'status' => 'error',
+                        'header' => 'Gagal menambah stock barang',
+                        'sub' => 'gagal saat menyimpan history'
+                    ]));
+                }
+
+            } else {
+                return redirect()->back()->with('notiv', json_encode([
+                    'status' => 'error',
+                    'header' => 'Gagal menambah stock barang',
+                    'sub' => 'gagal saat menyimpan stock'
+                ]));
+            }
+        } catch (\Exception $err){
+            return redirect()->back()->with('notiv', json_encode([
+                'status' => 'error',
+                'header' => 'Gagal menambah stock barang',
+                'sub' => $err->getMessage(),
+            ]));
+        }
+    }
+    // for view
     public function show($id){
-        $barang = Barang::where('id', $id)->with('kategori')->withSum('stock', 'jumlah')->with('stock')->first();
+        $barang = Barang::where('id', $id)->with('kategori')->withSum('stock', 'jumlah')->with('stock')->with('harga')->first();
         return view('superadmin.barang.show', compact('barang'));
     }
+    public function history($id){
+        $barang = Barang::where('id', $id)->with('kategori')->withSum('stock', 'jumlah')->with('stock')->with('harga')->first();
+        $historys = History::where('barang_id', $id)->get();
+        return view('superadmin.barang.history', compact('barang', 'historys'));
+    }
+
 }

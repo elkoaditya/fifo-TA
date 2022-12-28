@@ -11,12 +11,16 @@ class Barang extends Model
     protected $fillable = [
         'kategori_id',
         'name',
-        'harga',
+        'berat',
+        'harga_id',
     ];
     public function kategori(){
         return $this->hasOne(Kategori::class, 'id', 'kategori_id');
     }
     public function stock(){
         return $this->hasMany(StockBarang::class, 'barang_id', 'id');
+    }
+    public function harga(){
+        return $this->hasOne(Price::class, 'id', 'harga_id');
     }
 }

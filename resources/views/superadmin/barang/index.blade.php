@@ -194,12 +194,20 @@ $fKategori = request()->get('kategori');
                                                         <input type="text" id="todoTitleAdd" name="name" class="form-control" />
                                                     </div>
                                                     <div class="col-lg-6 col-md-6">
-                                                        <label for="todoTitleAdd" class="form-label">harga</label>
-                                                        <input type="text" id="todoTitleAdd" class="form-control" name="harga" />
+                                                        <label for="todoTitleAdd" class="form-label">berat</label>
+                                                        <input type="text" id="todoTitleAdd" class="form-control" name="berat" />
                                                     </div>
                                                     <div class="col-lg-6 col-md-6">
                                                         <label for="todoTitleAdd" class="form-label">jumlah</label>
                                                         <input type="text" id="todoTitleAdd" class="form-control" name="jumlah"/>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <label for="todoTitleAdd" class="form-label">Kategori Harga</label>
+                                                        <select class="form-select" id="basicSelect" name="harga_id">
+                                                            @foreach($hargas as $harga)
+                                                                <option value="{{$harga->id}}">{{$harga->name}} ( {{$harga->price}} )</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                     <div class="col-lg-12 col-md-12">
                                                         <label for="todoTitleAdd" class="form-label">Kategori</label>

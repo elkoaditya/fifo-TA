@@ -8,20 +8,21 @@
             <tr>
                 <th>#ID</th>
                 {{--                                        <th><i data-feather="trending-up"></i></th>--}}
-                <th>Jumlah barang</th>
+                <th>Jumlah</th>
+                <th>Status</th>
                 <th class="text-truncate">tanggal_masuk</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($barang->stock as $stock)
+            @foreach($historys as $history)
                 <tr>
-                    <td>{{$stock->id}}</td>
-                    <td>{{$stock->jumlah}}</td>
-                    <td>{{$stock->created_at}}</td>
+                    <td>{{$history->id}}</td>
+                    <td>{{$history->jumlah}}</td>
+                    <td>{{$history->status}}</td>
+                    <td>{{$history->created_at}}</td>
                 </tr>
             @endforeach
             </tbody>
         </table>
-
     </div>
 @endsection
