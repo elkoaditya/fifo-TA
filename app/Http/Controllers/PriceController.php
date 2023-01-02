@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Kategori;
 use App\Models\Price;
+use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -44,5 +46,16 @@ class PriceController extends Controller
     }
     public function update(Request $request){
 
+    }
+
+    public function delete($id)
+    {
+        $delete = Price::where('id', $id)->delete();
+        if ($delete) {
+            $delete_price = UserProfile::where('id', $id)->delete();
+            return true;
+        }else{
+            return false;
+        }
     }
 }

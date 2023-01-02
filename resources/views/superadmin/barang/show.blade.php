@@ -13,7 +13,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($barang->stock as $stock)
+            @foreach($stocks as $stock)
                 <tr>
                     <td>{{$stock->id}}</td>
                     <td>{{$stock->jumlah}}</td>

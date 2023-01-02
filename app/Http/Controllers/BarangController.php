@@ -140,12 +140,54 @@ class BarangController extends Controller
     // for view
     public function show($id){
         $barang = Barang::where('id', $id)->with('kategori')->withSum('stock', 'jumlah')->with('stock')->with('harga')->first();
-        return view('superadmin.barang.show', compact('barang'));
+        $stocks = StockBarang::where('barang_id', $id)->orderBy('created_at', 'desc')->get();
+        return view('superadmin.barang.show', compact('barang', 'stocks'));
     }
     public function history($id){
         $barang = Barang::where('id', $id)->with('kategori')->withSum('stock', 'jumlah')->with('stock')->with('harga')->first();
         $historys = History::where('barang_id', $id)->get();
         return view('superadmin.barang.history', compact('barang', 'historys'));
+    }
+    public function stockOut(Request $request){
+        $validator = Validator::make($request->all(), [
+            'barang_id' => 'required|integer',
+            'jumlah' => 'required|integer',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with('notiv', json_encode([
+                'status' => 'error',
+                'header' => 'Gagal mengeluarkan barang',
+                'sub' => 'Silahkan cek semua field sudah di isi dengan benar',
+            ]));
+        }
+        try {
+            // get stock needed
+            $all_stock = StockBarang::where('barang_id', $validator->validated()['barang_id'])->orderBy('created_at', 'desc')->get();
+            $ids_stock = [];
+            $temp_jumlah = $validator->validated()['jumlah'];
+            foreach ($all_stock as $stock){
+                if ($temp_jumlah <= 0){
+                    break;
+                } else {
+                    if ($temp_jumlah >= $stock->jumlah){
+                        $temp_jumlah = $temp_jumlah - $stock->jumlah;
+                        StockBarang::where('id', $stock->id)->delete();
+                    } else {
+                        $temp_jumlah = $stock->jumlah - $temp_jumlah;
+                        StockBarang::where('id', $stock->id)->update([
+                            'jumlah' => $temp_jumlah
+                        ]);
+                    }
+                }
+            }
+            return redirect()->back();
+        } catch (\Exception $err){
+            return redirect()->back()->with('notiv', json_encode([
+                'status' => 'error',
+                'header' => 'Gagal mengeluarkan barang',
+                'sub' => $err->getMessage(),
+            ]));
+        }
     }
 
 }

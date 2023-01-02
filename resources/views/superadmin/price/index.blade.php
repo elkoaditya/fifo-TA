@@ -38,7 +38,7 @@
                 buttonsStyling: false
             }).then(function (result) {
                 if (result.value) {
-                    $.post('/superadmin/management-users/delete/'+$id,
+                    $.post('/superadmin/price/delete/'+$id,
                         {
                             '_token': '{{ csrf_token() }}',
                             task: 'comment_insert',
