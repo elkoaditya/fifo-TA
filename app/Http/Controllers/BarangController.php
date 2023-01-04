@@ -145,7 +145,7 @@ class BarangController extends Controller
     }
     public function history($id){
         $barang = Barang::where('id', $id)->with('kategori')->withSum('stock', 'jumlah')->with('stock')->with('harga')->first();
-        $historys = History::where('barang_id', $id)->get();
+        $historys = History::where('barang_id', $id)->orderBy('created_at', 'desc')->get();
         return view('superadmin.barang.history', compact('barang', 'historys'));
     }
     public function stockOut(Request $request){
@@ -173,14 +173,24 @@ class BarangController extends Controller
                         $temp_jumlah = $temp_jumlah - $stock->jumlah;
                         StockBarang::where('id', $stock->id)->delete();
                     } else {
-                        $temp_jumlah = $stock->jumlah - $temp_jumlah;
                         StockBarang::where('id', $stock->id)->update([
-                            'jumlah' => $temp_jumlah
+                            'jumlah' => $stock->jumlah - $temp_jumlah
                         ]);
                     }
                 }
             }
-            return redirect()->back();
+            $save_hitory = History::create([
+                'barang_id' => $validator->validated()['barang_id'],
+                'jumlah' => $validator->validated()['jumlah'],
+                'status' => 'out'
+            ]);
+
+
+            return redirect()->back()->with('notiv', json_encode([
+                'status' => 'success',
+                'header' => 'Berhasil mengeluarkan barang',
+                'sub' => 'Selamat anda berhasil mengeluarkan barang',
+            ]));
         } catch (\Exception $err){
             return redirect()->back()->with('notiv', json_encode([
                 'status' => 'error',

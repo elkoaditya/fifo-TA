@@ -18,7 +18,9 @@
                 <tr>
                     <td>{{$history->id}}</td>
                     <td>{{$history->jumlah}}</td>
-                    <td>{{$history->status}}</td>
+                    <td >
+                        <p class="badge badge-light-{{$history->status == 'add' ? 'success' : 'danger'}}"> {{$history->status}} </p>
+                    </td>
                     <td>{{$history->created_at}}</td>
                 </tr>
             @endforeach

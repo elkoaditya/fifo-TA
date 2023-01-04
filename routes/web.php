@@ -46,6 +46,12 @@ Route::group(['middleware' => ['authrole:superadmin']], function () {
             Route::post('/outstock', [\App\Http\Controllers\BarangController::class, 'stockOut']);
         });
 
+        // Untuk Laporan
+        Route::group(['prefix' => 'laporan'], function (){
+            Route::get('/', [\App\Http\Controllers\LaporanController::class, 'index']);
+        });
+
+
         // Untuk management users
         Route::group(['prefix' => 'management-users'], function (){
             Route::get('/', [\App\Http\Controllers\ManagementUsersController::class, 'index']);

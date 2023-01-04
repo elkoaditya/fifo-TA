@@ -16,6 +16,13 @@
         'role' => 'superadmin'
     ],
     [
+        'name' => 'Laporan & Rekap',
+        'url' => '/superadmin/laporan',
+        'icon' => 'activity',
+        'type' => 'single', // single, multi, title
+        'role' => 'superadmin'
+    ],
+    [
         'name' => 'Management User',
         'url' => '/superadmin/management-users',
         'icon' => 'users',
