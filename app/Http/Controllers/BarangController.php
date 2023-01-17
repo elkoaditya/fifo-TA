@@ -173,9 +173,10 @@ class BarangController extends Controller
                         $temp_jumlah = $temp_jumlah - $stock->jumlah;
                         StockBarang::where('id', $stock->id)->delete();
                     } else {
-                        StockBarang::where('id', $stock->id)->update([
+                        StockBarang::find($stock->id)->update([
                             'jumlah' => $stock->jumlah - $temp_jumlah
                         ]);
+                        break;
                     }
                 }
             }

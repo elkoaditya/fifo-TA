@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 --
 
 INSERT INTO `users` (`id`, `username`, `name`, `role`, `password`, `profile`, `created_at`, `updated_at`) VALUES
-('d31e7dba-5590-4be2-8895-6332914930aa', 'admin', 'Elko Aditya', 'superadmin', 'a47964874fc92720508fc3c87218cddd', 'https://minimaltoolkit.com/images/randomdata/male/2.jpg', '2021-12-22 02:04:25', '2021-12-22 02:04:25');
+('d31e7dba-5590-4be2-8895-6332914930aa', 'master', 'Elko Aditya', 'superadmin', 'a47964874fc92720508fc3c87218cddd', 'https://minimaltoolkit.com/images/randomdata/male/2.jpg', '2021-12-22 02:04:25', '2021-12-22 02:04:25');
 
 --
 -- Dumping data for table `user_profiles`

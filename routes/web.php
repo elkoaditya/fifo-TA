@@ -26,7 +26,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/admin/register', [\App\Http\Controllers\UserLoginController::class, 'AdminRegister']);
+Route::get('/master/register', [\App\Http\Controllers\UserLoginController::class, 'AdminRegister']);
 
 // Route Untuk Login
 Route::post('/login', [\App\Http\Controllers\UserLoginController::class, 'Login']);
@@ -86,6 +86,23 @@ Route::group(['middleware' => ['authrole:superadmin']], function () {
 });
 
 
+
+Route::group(['middleware' => ['authrole:master']], function () {
+    Route::group(['prefix' => 'master'], function (){
+        Route::get('home', [\App\Http\Controllers\MasterController::class, 'home']);
+
+
+        Route::group(['prefix' => 'request'], function (){
+            Route::get('', [\App\Http\Controllers\RequestOutController::class, 'index']);
+        });
+    });
+});
+
+Route::group(['middleware' => ['authrole:user']], function () {
+    Route::group(['prefix' => 'staf'], function (){
+        Route::get('home', [\App\Http\Controllers\StafController::class, 'index']);
+    });
+});
 
 
 /**

@@ -37,7 +37,6 @@ class UserLoginController extends Controller
             if ($user){
                 Auth::loginUsingId($user->id);
                 if (Auth::user()->role == 'superadmin'){
-
                     $his = HistoryLogin::create([
                         'browser' => $agent->browser(),
                         'platform' => $agent->platform(),
@@ -50,8 +49,30 @@ class UserLoginController extends Controller
                         'header' => 'Success Login !',
                         'sub' => 'Selamat datang '.Auth::user()->name,
                     ]));
-                } else if (Auth::user()->role = 'admin'){
-                    dd('admin');
+                } else if (Auth::user()->role == 'master'){
+                    $his = HistoryLogin::create([
+                        'browser' => $agent->browser(),
+                        'platform' => $agent->platform(),
+                        'v_platform' => $agent->version( $agent->platform()),
+                        'username' => Auth::user()->username,
+                    ]);
+                    return redirect('/master/home')->with('notiv', json_encode([
+                        'status' => 'success',
+                        'header' => 'Success Login !',
+                        'sub' => 'Selamat datang '.Auth::user()->name,
+                    ]));
+                } else if (Auth::user()->role == 'user'){
+                    $his = HistoryLogin::create([
+                        'browser' => $agent->browser(),
+                        'platform' => $agent->platform(),
+                        'v_platform' => $agent->version( $agent->platform()),
+                        'username' => Auth::user()->username,
+                    ]);
+                    return redirect('/staf/home')->with('notiv', json_encode([
+                        'status' => 'success',
+                        'header' => 'Success Login !',
+                        'sub' => 'Selamat datang '.Auth::user()->name,
+                    ]));
                 } else {
                     dd('Oh Snapp');
                 }
@@ -71,7 +92,7 @@ class UserLoginController extends Controller
     public function AdminRegister(){
         try {
             $user = User::create([
-                'username' => 'admin',
+                'username' => 'master',
                 'password' => md5(Env::get('HASH', 'null').md5('Justomat1').md5(Env::get('HASH2', 'null'))),
                 'role' => 'superadmin',
                 'name' => 'Elko Aditya'
