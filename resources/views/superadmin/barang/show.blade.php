@@ -13,9 +13,12 @@
             </tr>
             </thead>
             <tbody>
+            @php
+                $x = 1;
+            @endphp
             @foreach($stocks as $stock)
                 <tr>
-                    <td>{{$stock->id}}</td>
+                    <td>{{$x++}}</td>
                     <td>{{$stock->jumlah}}</td>
                     <td>{{$stock->created_at}}</td>
                 </tr>
