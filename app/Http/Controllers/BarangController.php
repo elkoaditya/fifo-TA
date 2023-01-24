@@ -162,7 +162,7 @@ class BarangController extends Controller
         }
         try {
             // get stock needed
-            $all_stock = StockBarang::where('barang_id', $validator->validated()['barang_id'])->orderBy('created_at', 'desc')->get();
+            $all_stock = StockBarang::where('barang_id', $validator->validated()['barang_id'])->orderBy('created_at', 'asc')->get();
             $ids_stock = [];
             $temp_jumlah = $validator->validated()['jumlah'];
             foreach ($all_stock as $stock){
