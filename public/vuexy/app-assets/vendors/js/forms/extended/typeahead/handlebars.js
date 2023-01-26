@@ -205,7 +205,7 @@ var __module2__ = (function(__dependency1__, __dependency2__) {
       if(arguments.length === 2) {
         return undefined;
       } else {
-        throw new Error("Missing helper: '" + arg + "'");
+        throw new Error("Missing Helper: '" + arg + "'");
       }
     });
 
@@ -252,8 +252,8 @@ var __module2__ = (function(__dependency1__, __dependency2__) {
         } else {
           for(var key in context) {
             if(context.hasOwnProperty(key)) {
-              if(data) { 
-                data.key = key; 
+              if(data) {
+                data.key = key;
                 data.index = i;
                 data.first = (i === 0);
               }
@@ -550,17 +550,17 @@ var __module7__ = (function(__dependency1__) {
       var id = this.id = rawParams[0];
       var params = this.params = rawParams.slice(1);
 
-      // a mustache is an eligible helper if:
+      // a mustache is an eligible Helper if:
       // * its id is simple (a single part, not `this` or `..`)
       var eligibleHelper = this.eligibleHelper = id.isSimple;
 
-      // a mustache is definitely a helper if:
-      // * it is an eligible helper, and
+      // a mustache is definitely a Helper if:
+      // * it is an eligible Helper, and
       // * it has at least one parameter or hash segment
       this.isHelper = eligibleHelper && (params.length || hash);
 
-      // if a mustache is an eligible helper but not a definite
-      // helper, it is ambiguous, and will be resolved in a later
+      // if a mustache is an eligible Helper but not a definite
+      // Helper, it is ambiguous, and will be resolved in a later
       // pass or at runtime.
     },
 
@@ -693,9 +693,9 @@ var __module9__ = (function() {
 
   var $0 = $$.length - 1;
   switch (yystate) {
-  case 1: return new yy.ProgramNode($$[$0-1]); 
+  case 1: return new yy.ProgramNode($$[$0-1]);
   break;
-  case 2: return new yy.ProgramNode([]); 
+  case 2: return new yy.ProgramNode([]);
   break;
   case 3:this.$ = new yy.ProgramNode([], $$[$0-1], $$[$0]);
   break;
@@ -711,7 +711,7 @@ var __module9__ = (function() {
   break;
   case 9:this.$ = [$$[$0]];
   break;
-  case 10: $$[$0-1].push($$[$0]); this.$ = $$[$0-1]; 
+  case 10: $$[$0-1].push($$[$0]); this.$ = $$[$0-1];
   break;
   case 11:this.$ = new yy.BlockNode($$[$0-2], $$[$0-1].inverse, $$[$0-1], $$[$0]);
   break;
@@ -767,7 +767,7 @@ var __module9__ = (function() {
   break;
   case 37:this.$ = new yy.IdNode($$[$0]);
   break;
-  case 38: $$[$0-2].push({part: $$[$0], separator: $$[$0-1]}); this.$ = $$[$0-2]; 
+  case 38: $$[$0-2].push({part: $$[$0], separator: $$[$0-1]}); this.$ = $$[$0-2];
   break;
   case 39:this.$ = [{part: $$[$0]}];
   break;
@@ -1089,14 +1089,14 @@ var __module9__ = (function() {
                                        this.begin("mu");
                                      }
                                      if(yy_.yytext) return 14;
-                                   
+
   break;
   case 1:return 14;
   break;
   case 2:
                                      this.popState();
                                      return 14;
-                                   
+
   break;
   case 3:strip(0,4); this.popState(); return 15;
   break;
@@ -1428,7 +1428,7 @@ var __module11__ = (function(__dependency1__) {
     // [ambiguousBlockValue]
     //
     // On stack, before: hash, inverse, program, value
-    // Compiler value, before: lastHelper=value of last found helper, if any
+    // Compiler value, before: lastHelper=value of last found Helper, if any
     // On stack, after, if no lastHelper: same as [blockValue]
     // On stack, after, if lastHelper: value
     ambiguousBlockValue: function() {
@@ -1675,12 +1675,12 @@ var __module11__ = (function(__dependency1__) {
     // [invokeHelper]
     //
     // On stack, before: hash, inverse, program, params..., ...
-    // On stack, after: result of helper invocation
+    // On stack, after: result of Helper invocation
     //
-    // Pops off the helper's parameters, invokes the helper,
-    // and pushes the helper's return value onto the stack.
+    // Pops off the Helper's parameters, invokes the Helper,
+    // and pushes the Helper's return value onto the stack.
     //
-    // If the helper is not found, `helperMissing` is called.
+    // If the Helper is not found, `helperMissing` is called.
     invokeHelper: function(paramSize, name) {
       this.context.aliases.helperMissing = 'helpers.helperMissing';
 
@@ -1698,9 +1698,9 @@ var __module11__ = (function(__dependency1__) {
     // [invokeKnownHelper]
     //
     // On stack, before: hash, inverse, program, params..., ...
-    // On stack, after: result of helper invocation
+    // On stack, after: result of Helper invocation
     //
-    // This operation is used when the helper is known to exist,
+    // This operation is used when the Helper is known to exist,
     // so a `helperMissing` fallback is not required.
     invokeKnownHelper: function(paramSize, name) {
       var helper = this.setupHelper(paramSize, name);
@@ -1714,7 +1714,7 @@ var __module11__ = (function(__dependency1__) {
     //
     // This operation is used when an expression like `{{foo}}`
     // is provided, but we don't know at compile-time whether it
-    // is a helper or a path.
+    // is a Helper or a path.
     //
     // This operation emits more code than the other options,
     // and can be avoided by passing the `knownHelpers` and
@@ -2099,7 +2099,7 @@ var __module10__ = (function(__dependency1__, __dependency2__, __dependency3__, 
 
   function Compiler() {}
 
-  __exports__.Compiler = Compiler;// the foundHelper register will disambiguate helper lookup from finding a
+  __exports__.Compiler = Compiler;// the foundHelper register will disambiguate Helper lookup from finding a
   // function in a context. This is necessary for mustache compatibility, which
   // requires that context functions in blocks are evaluated by blockHelperMissing,
   // and then proceed as if the resulting value was provided to blockHelperMissing.
@@ -2378,7 +2378,7 @@ var __module10__ = (function(__dependency1__, __dependency2__, __dependency3__, 
       if (this.options.knownHelpers[name]) {
         this.opcode('invokeKnownHelper', params.length, name);
       } else if (this.options.knownHelpersOnly) {
-        throw new Error("You specified knownHelpersOnly, but used the unknown helper " + name);
+        throw new Error("You specified knownHelpersOnly, but used the unknown Helper " + name);
       } else {
         this.opcode('invokeHelper', params.length, name);
       }

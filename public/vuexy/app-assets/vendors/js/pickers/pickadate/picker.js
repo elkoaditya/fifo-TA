@@ -18,7 +18,7 @@
     // Browser globals.
     else if ( typeof window == 'object' )
         window.Picker = factory( jQuery )
-    
+
     else this.Picker = factory( jQuery )
 
 }(function( $ ) {
@@ -1017,7 +1017,7 @@ function getRealEventTarget( event, ELEMENT ) {
 }
 
 /**
- * PickerConstructor helper methods.
+ * PickerConstructor Helper methods.
  */
 PickerConstructor._ = {
 
