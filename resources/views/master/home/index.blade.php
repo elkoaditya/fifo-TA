@@ -68,7 +68,7 @@
                         <tr>
                             <th>#</th>
                             <th>Nama</th>
-                            <th>Harga pergram</th>
+                            <th>Berat/Gram</th>
                             <th>Kategori</th>
                             <th class="text-truncate">Harga 1/gram</th>
                             <th>Stock</th>
