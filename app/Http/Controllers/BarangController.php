@@ -200,5 +200,23 @@ class BarangController extends Controller
             ]));
         }
     }
+    public function delete(Request $request) {
+        try {
+            $delete = Barang::where('id', $request->id)->delete();
+            if ($delete) {
+                return redirect('/superadmin/barang')->with('notiv', json_encode([
+                    'status' => 'warning',
+                    'header' => 'Data barang berhasil dihapus',
+                    'sub' => 'Selamat data barang anda berhasil dihapus',
+                ]));
+            }
+        } catch (\Exception $err) {
+            return redirect()->back()->with('notiv', json_encode([
+                'status' => 'error',
+                'header' => 'Gagal saat menyimpan barang',
+                'sub' => 'Silahkan hubungi administrator',
+            ]));
+        }
+    }
 
 }
