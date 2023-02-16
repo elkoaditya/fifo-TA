@@ -13,6 +13,7 @@ class Barang extends Model
         'name',
         'berat',
         'harga_id',
+        'image_url',
     ];
     public function kategori(){
         return $this->hasOne(Kategori::class, 'id', 'kategori_id');

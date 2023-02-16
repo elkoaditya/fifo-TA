@@ -101,7 +101,7 @@
                                 <div class="card-body">
                                     <div class="user-avatar-section">
                                         <div class="d-flex align-items-center flex-column">
-                                            <img class="img-fluid rounded mt-3 mb-2" src="{{ asset('vuexy') }}/app-assets/images/box.png" height="110" width="110" alt="User avatar" />
+                                            <img class="img-fluid rounded mt-3 mb-2" src="{{$barang->image_url == null ? asset('vuexy').'/app-assets/images/box.png' : $barang->image_url}}" height="110" width="110" alt="User avatar" />
                                             <div class="user-info text-center">
                                                 <h4 class="text-success">{{$barang->name}}</h4>
                                                 {{--                                                @if($barang->user->is_whatsapp_validated == null)--}}
