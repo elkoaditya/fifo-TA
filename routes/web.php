@@ -44,6 +44,7 @@ Route::group(['middleware' => ['authrole:superadmin']], function () {
             Route::get('/{id}/history', [\App\Http\Controllers\BarangController::class, 'history']);
             Route::post('/addstock', [\App\Http\Controllers\BarangController::class, 'addStock']);
             Route::post('/outstock', [\App\Http\Controllers\BarangController::class, 'stockOut']);
+            Route::post('/delete', [\App\Http\Controllers\BarangController::class, 'delete']);
         });
 
         // Untuk Laporan

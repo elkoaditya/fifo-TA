@@ -101,7 +101,7 @@
                                 <div class="card-body">
                                     <div class="user-avatar-section">
                                         <div class="d-flex align-items-center flex-column">
-                                            <img class="img-fluid rounded mt-3 mb-2" src="{{ asset('vuexy') }}/app-assets/images/box.png" height="110" width="110" alt="User avatar" />
+                                            <img class="img-fluid rounded mt-3 mb-2" src="{{$barang->image_url == null ? asset('vuexy').'/app-assets/images/box.png' : $barang->image_url}}" height="110" width="110" alt="User avatar" />
                                             <div class="user-info text-center">
                                                 <h4 class="text-success">{{$barang->name}}</h4>
                                                 {{--                                                @if($barang->user->is_whatsapp_validated == null)--}}
@@ -183,6 +183,9 @@
                                             <a href="javascript:;" class="btn btn-warning me-1" data-bs-target="#stockout" data-bs-toggle="modal">
                                                 Stock Out
                                             </a>
+                                            <a href="javascript:;" class="btn btn-danger me-1" data-bs-target="#delete" data-bs-toggle="modal">
+                                                Delete
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -263,6 +266,32 @@
 
                                     <div class="col-12 text-center mt-2 pt-50">
                                         <button type="submit" class="btn btn-primary me-1">Submit</button>
+                                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+                                            Discard
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="delete" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
+                        <div class="modal-content">
+                            <div class="modal-header bg-transparent">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body pb-5 px-sm-5 pt-50">
+                                <div class="text-center mb-2">
+                                    <h1 class="mb-1">Menghapus Semua barang</h1>
+                                    <p>Semua barang dan stock akan di hapus</p>
+                                </div>
+                                <form id="editUserForm" class="row gy-1 pt-75" method="post" action="/superadmin/barang/delete">@csrf
+                                    <input type="hidden" value="{{$barang->id}}" name="id" >
+
+                                    <div class="col-12 text-center mt-2 pt-50">
+                                        <button type="submit" class="btn btn-danger me-1">Submit</button>
                                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
                                             Discard
                                         </button>

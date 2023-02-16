@@ -25,6 +25,7 @@ class BarangController extends Controller
             'kategori_id' => 'required|integer',
             'jumlah' => 'required|integer',
             'harga_id' => 'required|integer',
+            'image' => 'required|string'
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('notiv', json_encode([
@@ -40,6 +41,7 @@ class BarangController extends Controller
                 'name' => $validator->validate()['name'],
                 'berat' => $validator->validate()['berat'],
                 'harga_id' => $validator->validate()['harga_id'],
+                'image_url' => $validator->validated()['image']
             ]);
             if ($save_barang) {
                 $save_stock_barang = StockBarang::create([
@@ -197,6 +199,24 @@ class BarangController extends Controller
                 'status' => 'error',
                 'header' => 'Gagal mengeluarkan barang',
                 'sub' => $err->getMessage(),
+            ]));
+        }
+    }
+    public function delete(Request $request) {
+        try {
+            $delete = Barang::where('id', $request->id)->delete();
+            if ($delete) {
+                return redirect('/superadmin/barang')->with('notiv', json_encode([
+                    'status' => 'warning',
+                    'header' => 'Data barang berhasil dihapus',
+                    'sub' => 'Selamat data barang anda berhasil dihapus',
+                ]));
+            }
+        } catch (\Exception $err) {
+            return redirect()->back()->with('notiv', json_encode([
+                'status' => 'error',
+                'header' => 'Gagal saat menyimpan barang',
+                'sub' => 'Silahkan hubungi administrator',
             ]));
         }
     }
