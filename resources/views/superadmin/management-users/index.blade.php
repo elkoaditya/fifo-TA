@@ -26,11 +26,11 @@
         var confirmText = $('#confirm-text');
         function deleteSkill ($id){
             Swal.fire({
-                title: 'Delete pegawai skill?',
+                title: 'Delete Data user?',
                 text: "Data yang dihapus tidak dapat dikembalikan!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Hapus Skill',
+                confirmButtonText: 'Hapus data user',
                 customClass: {
                     confirmButton: 'btn btn-danger',
                     cancelButton: 'btn btn-outline-success ms-1'

@@ -79,9 +79,9 @@
                     <thead class="table-light">
                     <tr>
                         <th>...</th>
-                        <th>Username</th>
                         <th>Nama</th>
-                        <th>Role</th>
+                        <th>Deskripsi</th>
+                        <th>Code</th>
                         <th>status</th>
                     </tr>
                     </thead>
