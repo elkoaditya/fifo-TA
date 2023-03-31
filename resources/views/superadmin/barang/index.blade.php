@@ -60,21 +60,21 @@
 </script>
 
 <script language="JavaScript">
-    Webcam.set({
-        width: 150,
-        height: 130,
-        image_format: 'jpeg',
-        jpeg_quality: 90
-    });
-
-    Webcam.attach( '#my_camera' );
-
-    function take_snapshot() {
-        Webcam.snap( function(data_uri) {
-            $(".image-tag").val(data_uri);
-            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
-        } );
-    }
+    // Webcam.set({
+    //     width: 150,
+    //     height: 130,
+    //     image_format: 'jpeg',
+    //     jpeg_quality: 90
+    // });
+    //
+    // Webcam.attach( '#my_camera' );
+    //
+    // function take_snapshot() {
+    //     Webcam.snap( function(data_uri) {
+    //         $(".image-tag").val(data_uri);
+    //         document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+    //     } );
+    // }
 </script>
 
 @endsection
@@ -178,7 +178,7 @@ $fKategori = request()->get('kategori');
                                                     <span class="badge rounded-pill badge-light-info">{{$barang->kategori->name}}</span>
                                                 </div>
                                                 <div class="avatar">
-                                                    <img src="{{$barang->image_url == null ? asset('vuexy').'/app-assets/images/box.png' : $barang->image_url}}" alt="user-avatar" height="32" width="32" />
+                                                    <img src="{{$barang->image_url == null ? asset('vuexy').'/app-assets/images/box.png' : '/storage/'.$barang->image_url}}" alt="user-avatar" height="32" width="32" />
                                                 </div>
                                             </div>
                                         </div>
@@ -197,7 +197,7 @@ $fKategori = request()->get('kategori');
                     <div class="modal modal-slide-in sidebar-todo-modal fade" id="new-task-modal">
                         <div class="modal-dialog sidebar-lg">
                             <div class="modal-content p-0">
-                                <form id="" class="todo-modal needs-validation" novalidate action="/superadmin/barang/create" method="post">@csrf
+                                <form id="" class="todo-modal needs-validation" novalidate action="/superadmin/barang/create" method="post" enctype="multipart/form-data">@csrf
                                     <div class="modal-header align-items-center mb-1">
                                         <div class="todo-item-action d-flex align-items-center justify-content-between ms-auto">
                                             <i data-feather="x" class="cursor-pointer" data-bs-dismiss="modal" stroke-width="3"></i>
@@ -236,13 +236,10 @@ $fKategori = request()->get('kategori');
                                                         </select>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-6 mb-1">
-                                                            <div id="my_camera"></div>
-                                                            <input type=button value="Ambil foto" onClick="take_snapshot()">
-                                                            <input type="hidden" name="image" class="image-tag">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div id="results">Hasil foto akan di tampilkan disini !</div>
+                                                        <div class="col-md-12 mb-1 mt-1">
+{{--                                                            <div id="my_camera"></div>--}}
+{{--                                                            <input type=button value="Ambil foto" onClick="take_snapshot()">--}}
+                                                            <input type="file" name="image" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>

@@ -25,9 +25,10 @@ class BarangController extends Controller
             'kategori_id' => 'required|integer',
             'jumlah' => 'required|integer',
             'harga_id' => 'required|integer',
-            'image' => 'required|string'
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:6000'
         ]);
         if ($validator->fails()) {
+            dd($validator->errors());
             return redirect()->back()->with('notiv', json_encode([
                 'status' => 'error',
                 'header' => 'Gagal menyimpan kategori',
@@ -36,12 +37,15 @@ class BarangController extends Controller
         }
         try {
             // Create Barang
+
+            $image_path = $request->file('image')->store('image', 'public');
+
             $save_barang = Barang::create([
                 'kategori_id' => $validator->validate()['kategori_id'],
                 'name' => $validator->validate()['name'],
                 'berat' => $validator->validate()['berat'],
                 'harga_id' => $validator->validate()['harga_id'],
-                'image_url' => $validator->validated()['image']
+                'image_url' => $image_path
             ]);
             if ($save_barang) {
                 $save_stock_barang = StockBarang::create([
@@ -150,6 +154,13 @@ class BarangController extends Controller
         $historys = History::where('barang_id', $id)->orderBy('created_at', 'desc')->get();
         return view('superadmin.barang.history', compact('barang', 'historys'));
     }
+    public function update($id){
+        $barang = Barang::where('id', $id)->with('kategori')->withSum('stock', 'jumlah')->with('stock')->with('harga')->first();
+        $historys = History::where('barang_id', $id)->orderBy('created_at', 'desc')->get();
+        $hargas = Price::all();
+        $kategoris = Kategori::all();
+        return view('superadmin.barang.update', compact('barang', 'historys', 'hargas', 'kategoris'));
+    }
     public function stockOut(Request $request){
         $validator = Validator::make($request->all(), [
             'barang_id' => 'required|integer',
@@ -216,6 +227,50 @@ class BarangController extends Controller
             return redirect()->back()->with('notiv', json_encode([
                 'status' => 'error',
                 'header' => 'Gagal saat menyimpan barang',
+                'sub' => 'Silahkan hubungi administrator',
+            ]));
+        }
+    }
+    public function save_update(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|integer',
+            'name' => 'required|string',
+            'berat' => 'required|numeric',
+            'kategori_id' => 'required|integer',
+            'harga_id' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:6000'
+        ]);
+        if ($validator->fails()) {
+            dd($validator->errors());
+            return redirect()->back()->with('notiv', json_encode([
+                'status' => 'error',
+                'header' => 'Gagal menyimpan kategori',
+                'sub' => 'Silahkan cek semua field sudah di isi dengan benar',
+            ]));
+        }
+        try {
+            $old_image = Barang::where('id', $validator->validated()['id'])->first()['image_url'];
+            if (isset($validator->validated()['image'])) {
+                $image_path = $request->file('image')->store('image', 'public');
+                $old_image = $image_path;
+            }
+            Barang::where('id', $validator->validated()['id'])->update([
+                'name' => $validator->validated()['name'],
+                'berat' => $validator->validated()['berat'],
+                'kategori_id' => $validator->validated()['kategori_id'],
+                'harga_id' => $validator->validated()['harga_id'],
+                'image_url' => $old_image,
+            ]);
+            return redirect()->back()->with('notiv', json_encode([
+                'status' => 'success',
+                'header' => 'Berhasil menyimpan kategori',
+                'sub' => 'Data barang anda berhasil diupdate.',
+            ]));
+        } catch (\Exception $err) {
+            dd($err);
+            return redirect()->back()->with('notiv', json_encode([
+                'status' => 'error',
+                'header' => 'Gagal menyimpan kategori',
                 'sub' => 'Silahkan hubungi administrator',
             ]));
         }

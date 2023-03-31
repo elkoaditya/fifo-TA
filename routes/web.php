@@ -42,9 +42,11 @@ Route::group(['middleware' => ['authrole:superadmin']], function () {
             Route::post('/create', [\App\Http\Controllers\BarangController::class, 'create']);
             Route::get('/{id}', [\App\Http\Controllers\BarangController::class, 'show']);
             Route::get('/{id}/history', [\App\Http\Controllers\BarangController::class, 'history']);
+            Route::get('/{id}/update', [\App\Http\Controllers\BarangController::class, 'update']);
             Route::post('/addstock', [\App\Http\Controllers\BarangController::class, 'addStock']);
             Route::post('/outstock', [\App\Http\Controllers\BarangController::class, 'stockOut']);
             Route::post('/delete', [\App\Http\Controllers\BarangController::class, 'delete']);
+            Route::post('/save_update', [\App\Http\Controllers\BarangController::class, 'save_update']);
         });
 
         // Untuk Laporan
