@@ -56,11 +56,32 @@
         'role' => 'master'
     ],
     [
-        'name' => 'Request',
-        'url' => '/master/request',
-        'icon' => 'log-out',
+        'name' => 'Daftar Barang',
+        'url' => '/superadmin/barang',
+        'icon' => 'server',
         'type' => 'single', // single, multi, title
         'role' => 'master'
+    ],
+    [
+        'name' => 'Laporan & Rekap',
+        'url' => '/superadmin/laporan',
+        'icon' => 'activity',
+        'type' => 'single', // single, multi, title
+        'role' => 'master'
+    ],
+    [
+        'name' => 'Kategori Management',
+        'url' => '/superadmin/kategori',
+        'icon' => 'hard-drive',
+        'type' => 'single', // single, multi, title
+        'role' => 'master'
+    ],
+    [
+        'name' => 'Price Management',
+        'url' => '/superadmin/price',
+        'icon' => 'dollar-sign',
+        'type' => 'single', // single, multi, title
+        'role' => ' master'
     ],
     [
         'name' => 'Main FIture',

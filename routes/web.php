@@ -32,7 +32,7 @@ Route::get('/master/register', [\App\Http\Controllers\UserLoginController::class
 Route::post('/login', [\App\Http\Controllers\UserLoginController::class, 'Login']);
 Route::post('/logout', [\App\Http\Controllers\UserLoginController::class, 'Logout']);
 
-Route::group(['middleware' => ['authrole:superadmin']], function () {
+Route::group(['middleware' => ['authrole:superadmin,master']], function () {
     Route::group(['prefix' => 'superadmin'], function (){
         Route::get('home', [\App\Http\Controllers\SuperadminController::class, 'Home']);
 
@@ -90,7 +90,7 @@ Route::group(['middleware' => ['authrole:superadmin']], function () {
 
 
 
-Route::group(['middleware' => ['authrole:master']], function () {
+Route::group(['middleware' => ['authrole:master, user']], function () {
     Route::group(['prefix' => 'master'], function (){
         Route::get('home', [\App\Http\Controllers\MasterController::class, 'home']);
 
