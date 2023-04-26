@@ -61,12 +61,12 @@
         <tfoot>
 {{--        @dd($barangs)--}}
         <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th>
+            <th>No.</th>
+            <th>Nama Barang</th>
+            <th>Stock</th>
+            <th>Kategori</th>
+            <th>Harga/Gram</th>
+            <th>Total Harga</th>
         </tr>
         </tfoot>
     </table>

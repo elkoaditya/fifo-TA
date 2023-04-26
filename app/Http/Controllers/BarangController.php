@@ -12,8 +12,20 @@ use Illuminate\Support\Facades\Validator;
 
 class BarangController extends Controller
 {
-    public function index(){
-        $barangs = Barang::with('kategori')->withSum('stock', 'jumlah')->get();
+    public function index(Request $request){
+        $kategori = $request->query('kategori');
+        if ($kategori == null) {
+            $barangs = Barang::with('kategori')
+                ->withSum('stock', 'jumlah')
+//                ->where('kategori_id', $kategori)
+                ->get();
+        } else {
+            $barangs = Barang::with('kategori')
+                ->withSum('stock', 'jumlah')
+                ->where('kategori_id', $kategori)
+                ->get();
+        }
+
         $kategoris = Kategori::all();
         $hargas = Price::all();
         return view('superadmin.barang.index', compact('barangs', 'kategoris', 'hargas'));
