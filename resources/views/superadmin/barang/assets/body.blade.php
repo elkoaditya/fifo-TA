@@ -101,7 +101,7 @@
                                 <div class="card-body">
                                     <div class="user-avatar-section">
                                         <div class="d-flex align-items-center flex-column">
-                                            <img class="img-fluid rounded mt-3 mb-2" src="/storage/{{$barang->image_url == null ? asset('vuexy').'/app-assets/images/box.png' : $barang->image_url}}" height="110" width="110" alt="User avatar" />
+                                            <img class="img-fluid rounded mt-3 mb-2" src="/storage/{{$barang->image_url == null ? asset('vuexy').'/app-assets/images/box.png' : $barang->image_url}}" height="110" width="110" alt="User avatar" data-bs-target="#show-images" data-bs-toggle="modal" />
                                             <div class="user-info text-center">
                                                 <h4 class="text-success">{{$barang->name}}</h4>
                                                 {{--                                                @if($barang->user->is_whatsapp_validated == null)--}}
@@ -303,6 +303,19 @@
                                         </button>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="show-images" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
+                        <div class="modal-content">
+                            <div class="modal-header bg-transparent">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body pb-5 px-sm-5 pt-50">
+                                <img class="full-width ful" src="/storage/{{$barang->image_url == null ? asset('vuexy').'/app-assets/images/box.png' : $barang->image_url}}" height="500" width="500" alt="User avatar" />
                             </div>
                         </div>
                     </div>
