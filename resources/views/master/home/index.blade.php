@@ -67,6 +67,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
+                            <th>Foto</th>
                             <th>Nama</th>
                             <th>Berat/Gram</th>
                             <th>Kategori</th>
@@ -81,6 +82,9 @@
                         @foreach($barangs as $barang)
                             <tr>
                                 <td>{{$x++}}</td>
+                                <td>
+                                    <img class="img-fluid rounded " src="/storage/{{$barang->image_url == null ? asset('vuexy').'/app-assets/images/box.png' : $barang->image_url}}" height="110" width="110" alt="User avatar" data-bs-target="#show-images-{{$barang->id}}" data-bs-toggle="modal" />
+                                </td>
                                 <td>{{$barang->name}}</td>
                                 <td>{{$barang->berat}}</td>
                                 <td>{{$barang->kategori->name}}</td>
@@ -96,5 +100,20 @@
             </div>
         </div>
     </div>
+
+    @foreach($barangs as $barang)
+        <div class="modal fade" id="show-images-{{$barang->id}}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
+                <div class="modal-content">
+                    <div class="modal-header bg-transparent">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pb-5 px-sm-5 pt-50">
+                        <img class="full-width ful" src="/storage/{{$barang->image_url == null ? asset('vuexy').'/app-assets/images/box.png' : $barang->image_url}}" height="500" width="500" alt="User avatar" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
 @endsection
