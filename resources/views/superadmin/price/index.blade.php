@@ -26,7 +26,7 @@
         var confirmText = $('#confirm-text');
         function deleteSkill ($id){
             Swal.fire({
-                title: 'Delete pegawai skill?',
+                title: 'Delete data harga?',
                 text: "Data yang dihapus tidak dapat dikembalikan!",
                 icon: 'warning',
                 showCancelButton: true,
@@ -94,7 +94,7 @@
                                         Actions
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a type="button" class="dropdown-item text-danger" onclick="deleteSkill('{{$price->id}}')">Delete User</a>
+                                        <a type="button" class="dropdown-item text-danger" onclick="deleteSkill('{{$price->id}}')">Delete Price</a>
                                     </div>
                                 </div>
                             </td>
